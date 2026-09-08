@@ -1,53 +1,35 @@
 print("      *******PYTHON MINI PROJECT********")
-print("        Python Personal Expense Tracker")
-
-transactions = []
-
+print("<=================================================>")
+print("        Python Personal Expense Tracker ")
+print("<=================================================>")
 while True:
-    print("\n1. Add Transaction\n2. View Transactions\n3. Update Transaction")
-    print("4. Delete Transaction\n5. View Summary\n6. Generate Report\n7. Exit")
-    choice = input("Enter your choice: ").strip()
+    print("1. Add Transaction")
+    print("2. View Transactions")
+    print("3. Update Transaction")
+    print("4. Delete Transaction")
+    print("5. View Summary")
+    print("6. Generate Report")
+    print("7. Exit")
 
+    choice = input("Enter your choice: ")
     if choice == "1":
-        try:
-            amount = float(input("Amount: "))
-            description = input("Description: ").strip()
-            category = input("Category: ").strip() or "Other"
-            transactions.append({"amount": amount, "description": description,
-                                 "category": category})
-            print("Transaction added.")
-        except ValueError:
-            print("Amount must be a number.")
+        print("Add Transaction selected")
+
     elif choice == "2":
-        if not transactions:
-            print("No transactions found.")
-        for number, transaction in enumerate(transactions, 1):
-            print(f"{number}. {transaction['description']} - "
-                  f"${transaction['amount']:.2f} ({transaction['category']})")
-    elif choice in ("3", "4"):
-        if not transactions:
-            print("No transactions found.")
-            continue
-        try:
-            number = int(input("Transaction number: ")) - 1
-            transaction = transactions[number]
-            if choice == "4":
-                transactions.pop(number)
-                print("Transaction deleted.")
-            else:
-                transaction["description"] = input("New description: ").strip()
-                transaction["category"] = input("New category: ").strip() or "Other"
-                transaction["amount"] = float(input("New amount: "))
-                print("Transaction updated.")
-        except (ValueError, IndexError):
-            print("Invalid transaction number or amount.")
-    elif choice in ("5", "6"):
-        total = sum(item["amount"] for item in transactions)
-        print(f"Total expenses: ${total:.2f}")
-        if choice == "6":
-            print(f"Report contains {len(transactions)} transaction(s).")
+        print("View Transactions selected")
+
+    elif choice == "3":
+        print("Update Transaction selected")
+
+    elif choice == "4":
+        print("Delete Transaction selected")
+
+    elif choice == "5":
+        print("View Summary selected")
+
+    elif choice == "6":
+        print("Generate Report selected")
+
     elif choice == "7":
         print("Thank you for using Personal Expense Tracker!")
-        break
-    else:
-        print("Invalid choice.")
+    break
