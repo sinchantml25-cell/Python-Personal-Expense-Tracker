@@ -1,6 +1,6 @@
 import csv
 import os
-
+from datetime import datetime
 FILE_NAME = "expenses.csv"
 
 
@@ -22,29 +22,41 @@ def read_transactions():
     if not os.path.exists(FILE_NAME):
         initialize_file()
 
-    with open(FILE_NAME, newline="") as file:
-        reader = csv.DictReader(file)
-        return list(reader)
-
-
+    try:
+     with open(FILE_NAME, newline="", encoding="utf-8-sig") as file:
+            reader = csv.DictReader(file)
+            return list(reader)
+    except (IOError, PermissionError) as e:
+        print(f"Error reading file: {e}")
+        return []
 def write_transactions(rows):
-    with open(FILE_NAME, "w", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=[
-            "Date",
-            "Type",
-            "Category",
-            "Amount",
-            "Description"
-        ])
-        writer.writeheader()
-        writer.writerows(rows)
+    try:
+        with open(FILE_NAME, "w", newline="") as file:
+            writer = csv.DictWriter(file, fieldnames=[
+                "Date",
+                "Type",
+                "Category",
+                "Amount",
+                "Description"
+            ])
+            writer.writeheader()
+            writer.writerows(rows)
+    except (IOError, PermissionError) as e:
+        print(f"Error writing file: {e}. Your changes may not have been saved.")
 
+def get_valid_date(prompt):
+    while True:
+        date_str = input(prompt)
+        try:
+            datetime.strptime(date_str, "%d-%m-%Y")
+            return date_str
+        except ValueError:
+            print("Invalid date. Please use DD-MM-YYYY format (e.g., 05-09-2026).")
 
 def add_transaction():
     print("\n--- Add Transaction ---")
 
-    date = input("Enter date (DD-MM-YYYY): ")
-
+    date = get_valid_date("Enter date (DD-MM-YYYY): ")
     transaction_type = input("Enter type (Income/Expense): ")
 
     while transaction_type not in ["Income", "Expense"]:
@@ -126,7 +138,7 @@ def update_transaction():
         return
 
     if field_choice == 1:
-        target["Date"] = input("Enter new date (DD-MM-YYYY): ")
+        target["Date"] = get_valid_date("Enter new date (DD-MM-YYYY): ")
     elif field_choice == 2:
         transaction_type = input("Enter new type (Income/Expense): ")
         while transaction_type not in ["Income", "Expense"]:
@@ -193,7 +205,10 @@ def view_summary():
     category_totals = {}
 
     for row in rows:
-        amount = float(row["Amount"])
+        try:
+            amount = float(row["Amount"])
+        except (ValueError, KeyError):
+            continue  
         category = row["Category"]
         category_totals[category] = category_totals.get(category, 0.0) + amount
 
@@ -220,28 +235,38 @@ def generate_report():
         print("No transactions found to report.")
         return
 
-    total_income = 0.0
-    total_expense = 0.0
+    print("1. Monthly Report")
+    print("2. Category-wise Report")
+    report_type = input("Choose report type: ")
 
-    for row in rows:
-        amount = float(row["Amount"])
-        if row["Type"] == "Income":
-            total_income += amount
-        elif row["Type"] == "Expense":
-            total_expense += amount
+    if report_type == "1":
+        month = input("Enter month and year (MM-YYYY): ")
+        filtered = [row for row in rows if row["Date"][3:] == month]
+        title = f"Monthly Report - {month}"
+    elif report_type == "2":
+        category = input("Enter category: ")
+        filtered = [row for row in rows if row["Category"].lower() == category.lower()]
+        title = f"Category Report - {category}"
+    else:
+        print("Invalid choice.")
+        return
 
+    if not filtered:
+        print("No matching transactions found.")
+        return
+
+    total_income = sum(float(r["Amount"]) for r in filtered if r["Type"] == "Income")
+    total_expense = sum(float(r["Amount"]) for r in filtered if r["Type"] == "Expense")
     balance = total_income - total_expense
 
-    report_lines = []
-    report_lines.append("Personal Expense Tracker Report")
-    report_lines.append("=================================")
+    report_lines = [title, "=" * len(title)]
     report_lines.append(f"Total Income: {total_income:.2f}")
     report_lines.append(f"Total Expense: {total_expense:.2f}")
     report_lines.append(f"Balance: {balance:.2f}")
     report_lines.append("")
     report_lines.append("Transactions:")
 
-    for index, row in enumerate(rows, start=1):
+    for index, row in enumerate(filtered, start=1):
         report_lines.append(f"{index}. {row['Date']} | {row['Type']} | {row['Category']} | {row['Amount']} | {row['Description']}")
 
     with open("report.txt", "w") as file:
