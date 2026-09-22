@@ -1,8 +1,8 @@
-Monthly Report - 04-2026
+Monthly Report - 12-2026
 ========================
-Total Income: 60000.00
+Total Income: 300000.00
 Total Expense: 0.00
-Balance: 60000.00
+Balance: 300000.00
 
 Transactions:
-1. 20-04-2026 | Income | slary | 60000.0 | 
+1. 10-12-2026 | Income | salary | 300000.0 | no 
