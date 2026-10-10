@@ -1,223 +1,109 @@
-Personal Expense Tracker
+# Personal Expense Tracker
 
-📌 Project Overview
+A simple Python-based expense tracking application that stores income and expense records in a CSV file, supports common financial operations, and generates useful summaries and reports.
 
-The Personal Expense Tracker is a Python-based mini project designed
-to help users record, organize, and monitor their daily income and
-expenses.
+## Overview
 
-The application provides a simple menu-driven interface where users
-can manage their financial transactions and view useful summaries of
-their spending and income.
+The Personal Expense Tracker helps users:
 
-The project uses file handling to store financial records so that
-the data can be maintained even after the program is closed.
+- Add income and expense transactions
+- View all stored transactions in a clean table
+- Update or remove any transaction
+- Check total income, total expense, and current balance
+- Generate monthly or category-based financial reports
+- Keep data stored persistently in a local CSV file
 
-🎯 Aim
+## Features
 
-To develop a simple Python-based Personal Expense Tracker that allows
-users to:
+- Date validation for `DD-MM-YYYY` and `YYYY-MM-DD`
+- Strict validation for `Income` and `Expense` types
+- Positive amount enforcement
+- Blank-field fallback handling (`Uncategorized`, `No description`)
+- File repair for malformed CSV entries
+- Friendly terminal-based menu and output formatting
+- Report generation saved to `report.txt`
 
-Add financial transactions
+## Project structure
 
-View saved transactions
+- `main.py` — application logic and menu-driven interface
+- `expenses.csv` — transaction storage
+- `report.txt` — generated report output
+- `test_expense_tracker.py` — automated validation tests
+- `README.md` — project documentation
 
-Update existing transactions
+## Data format
 
-Delete transactions
+The CSV file is stored with the following columns:
 
-Calculate total income
-
-Calculate total expenses
-
-Calculate current balance
-
-Generate monthly and category-wise expense reports
-
-Store financial records safely using file handling
-
-✨ Features
-
-1. Add Transaction
-
-Users can add a new transaction by entering:
-
-Date
-
-Type --- Income or Expense
-
-Category
-
-Amount
-
-The program validates the entered information before saving it.
-
-2. View Transactions
-
-Displays all recorded income and expense transactions in an organized
-format.
-
-3. Update Transaction
-
-Allows users to modify the details of an existing transaction.
-
-4. Delete Transaction
-
-Allows users to remove an unwanted transaction from the records.
-
-5. Financial Summary
-
-The application calculates:
-
-Total Income
-
-Total Expenses
-
-Current Balance
-
-Balance = Total Income - Total Expenses
-
-6. Expense Reports
-
-Users can generate reports such as:
-
-Monthly expense report
-
-Category-wise expense report
-
-These reports help users understand where their money is being spent.
-
-7. Data Storage
-
-Financial records are stored using a file such as expenses.csv.
-
-🛠️ Technologies Used
-
-Python 3
-
-CSV File Handling
-
-Python Functions
-
-Conditional Statements
-
-Loops
-
-Lists / Dictionaries
-
-Exception Handling
-
-Date Validation
-
-📁 Project Structure
-
-Personal-Expense-Tracker/
-│
-├── main.py
-├── expenses.csv
-└── README.md
-
-Files Description
-
-File                   Description
-
-expense_tracker.py   Main Python program
-expenses.csv         Stores income and expense records
-README.md            Project documentation
-
-📋 Transaction Format
-
-The CSV file stores records using the following columns:
-
-Date, Type, Category, Amount
+```csv
+Date,Type,Category,Amount,Description
+```
 
 Example:
 
-2026-09-01,Income,Salary,25000
-2026-09-02,Expense,Food,300
-2026-09-03,Expense,Transport,150
-2026-09-04,Expense,Shopping,1000
+```csv
+05-09-2026,Income,Salary,50000.00,Monthly salary
+07-09-2026,Expense,Food,250.00,Groceries
+```
 
-🧭 Main Menu
+## How to run
 
-The application provides a menu similar to:
+From the project folder:
 
-=================================
-      PERSONAL EXPENSE TRACKER
-=================================
+```bash
+python main.py
+```
+
+## Menu options
 
 1. Add Transaction
 2. View Transactions
 3. Update Transaction
 4. Delete Transaction
-5. Reports
-6. Exit
+5. View Summary
+6. Generate Report
+7. Exit
 
-Enter your choice:
+## Input validation and edge cases handled
 
-The user selects an option, performs the required operation, and then
-returns to the main menu.
+The project now checks for and handles:
 
-🔄 Basic Working
+- invalid dates
+- wrong transaction types
+- negative or zero amounts
+- blank category or description entries
+- missing or malformed CSV content
+- no-record scenarios
+- invalid menu choices
+- month and report filtering errors
 
-Start the program.
+## Testing
 
-Check whether expenses.csv exists.
+The project includes unit tests covering key scenarios, including:
 
-If the file does not exist, create it with the required headings.
+- valid CSV creation
+- malformed file repair
+- monthly report generation
+- positive amount validation
+- common input normalization
 
-Display the main menu.
+Run the tests with:
 
-Ask the user to select an option.
+```bash
+python -m unittest -v
+```
 
-Perform the selected operation.
+## Example workflow
 
-Validate user input wherever required.
+1. Start the program.
+2. Add transactions for income and expenses.
+3. View the transaction list.
+4. Check the summary to see total income, expense, and balance.
+5. Generate a monthly or category report for a specific period.
 
-Save changes to the CSV file.
+## Notes
 
-Display the result to the user.
-
-Return to the main menu.
-
-Continue until the user selects Exit.
-
-✅ Input Validation
-
-The program checks that:
-
-Date is entered in the correct format.
-
-Transaction type is either Income or Expense.
-
-Amount is a positive number.
-
-Required information is not left empty.
-
-Menu choice is a valid option.
-
-If invalid data is entered, the program displays an error message and
-asks the user to enter the information again.
-
-📊 Example
-
-Suppose the user enters:
-
-Income:
-Salary = ₹25,000
-
-Expenses:
-Food = ₹2,000
-Transport = ₹1,000
-Shopping = ₹3,000
-
-Then:
-
-Total Income   : ₹25,000
-Total Expenses : ₹6,000
-Current Balance: ₹19,000
-
-🚀 How to Run
+This project is designed as a practical beginner-friendly finance tracker and can be extended later with features such as monthly budgets, data filtering, charts, or a GUI version.
 
 Step 1: Install Python
 

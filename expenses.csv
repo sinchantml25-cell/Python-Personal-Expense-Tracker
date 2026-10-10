@@ -1,4 +1,6 @@
 Date,Type,Category,Amount,Description
-10-12-2026,Income,salary,300000.0,no 
-12-04-26,Income,80000,80000.0,
-02-08-2026,Income,salary,50000.0,nan
+10-12-2026,Income,Salary,300000.00,Monthly salary
+12-04-2026,Income,Freelance,80000.00,Client project payment
+02-08-2026,Expense,Food,5000.00,Groceries and dining
+04-08-2026,Expense,Transport,1200.00,Train tickets
+06-08-2026,Expense,Shopping,3500.00,Office supplies
