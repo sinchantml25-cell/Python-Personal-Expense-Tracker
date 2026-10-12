@@ -1,8 +1,8 @@
-Monthly Report - 12-2026
+Monthly Report - 10-2026
 ========================
-Total Income: 300000.00
-Total Expense: 0.00
-Balance: 300000.00
+Total Income: 0.00
+Total Expense: 5000.00
+Balance: -5000.00
 
 Transactions:
-1. 10-12-2026 | Income | salary | 300000.0 | no 
+1. 10-10-2026 | Expense | Food | 5000.00 | groceryes
